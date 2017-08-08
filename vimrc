@@ -1,3 +1,6 @@
+" Following this guide
+" http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
+"
 execute pathogen#infect()
 syntax on
 
