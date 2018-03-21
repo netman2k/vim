@@ -1,9 +1,17 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-MANAGE_HOST = true
-MANAGE_GUEST = true
-PRIVATE_NET_PREFIX='10.0.0'
-MEMORY="2048"
+manage_host = true
+manage_guest = true
+private_net_prefix='192.168.50'
+domain="localdomain"
+hosts={
+  default:{
+    hostname: "localhost.#{domain}",
+    #aliases: ['elastic'],
+    #memory: 2048,
+    #private_ip: "#{private_net_prefix}.2",
+  },
+}
 
 if Gem::Version.new(::Vagrant::VERSION) < Gem::Version.new('1.5')
   Vagrant.require_plugin('vagrant-hostmanager')
@@ -18,23 +26,22 @@ Vagrant.configure('2') do |config|
   end
 
   config.hostmanager.enabled = true
-  config.hostmanager.manage_host = true
-  config.hostmanager.manage_guest = true
+  config.hostmanager.manage_host = manage_host
+  config.hostmanager.manage_guest = manage_guest
 
-  config.vm.define :master do |server|
-    server.vm.hostname = 'master'
-    server.vm.network :private_network, :ip => "#{PRIVATE_NET_PREFIX}.2"
-    server.hostmanager.aliases = %w(master)
-    server.vm.provider "virtualbox" do |vb|
-      vb.memory = MEMORY
-    end
-  end
-
-  config.vm.define :slave do |server|
-    server.vm.hostname = 'slave'
-    server.vm.network :private_network, :ip => "#{PRIVATE_NET_PREFIX}.3"
-    server.vm.provider "virtualbox" do |vb|
-      vb.memory = MEMORY
+  hosts.each do |name,prop|
+    config.vm.define name do |server|
+      server.vm.hostname = prop[:hostname] if prop[:hostname]
+			if prop[:private_ip]
+				server.vm.network :private_network, :ip => prop[:private_ip]
+			end
+      server.hostmanager.aliases = prop[:aliases] if prop[:aliases]
+		  if prop[:memory]
+				server.vm.provider "virtualbox" do |vb|
+					vb.memory = prop[:memory]
+				end
+      end
     end
   end
 end
+
