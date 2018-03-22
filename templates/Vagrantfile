@@ -10,6 +10,10 @@ hosts={
     #aliases: ['elastic'],
     #memory: 2048,
     #private_ip: "#{private_net_prefix}.2",
+    provision:
+      <<-SCRIPT
+        sudo yum install vim -y
+      SCRIPT
   },
 }
 
@@ -41,6 +45,7 @@ Vagrant.configure('2') do |config|
 					vb.memory = prop[:memory]
 				end
       end
+      server.vm.provision "shell", inline: prop[:provision] if prop[:provision]
     end
   end
 end
