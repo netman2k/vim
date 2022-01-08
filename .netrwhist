@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/Users/ldaehyun/Vagrant/SDN/vagrant-sdn-lab'
+let g:netrw_dirhist_4='/Users/ldaehyun/Downloads/sosreport-pipibprdap1-2021-06-28-xjbfvuh/boot'
+let g:netrw_dirhist_3='/Users/ldaehyun/Documents/Study/Various_programming/Java/SpringBoot/SpringInAction/walls8-master-code/code/ch01/taco-cloud/src/main/java'
+let g:netrw_dirhist_2='/Users/ldaehyun/Documents/Study/AWS/CDK/efs-python/efs_python'
+let g:netrw_dirhist_1='/Users/ldaehyun/Documents/Study/Various_programming/C/tmp/string_length'
